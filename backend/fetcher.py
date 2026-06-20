@@ -91,8 +91,8 @@ def extract_content(html: str) -> dict:
 
 
 
-#Temporary Test Part. Uncomment and use this to test fetcher.
-""" if __name__ == "__main__":
+#Temporary Test Part. Works only when this file is run directly.
+if __name__ == "__main__":
     import asyncio
 
     async def test():
@@ -108,4 +108,4 @@ def extract_content(html: str) -> dict:
         print("Likely JS-dependent:", content["likely_js_dependent"])
         print("First 200 chars of clean text:", content["clean_text"][:200])
 
-    asyncio.run(test()) """
+    asyncio.run(test())
