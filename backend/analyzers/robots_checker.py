@@ -52,7 +52,7 @@ def parse_robots_txt(content: str) -> dict:
     
     agent_rules = {}
     current_agents = []
-    expecting_new_group = True  # tracks whether we're still collecting agent names, important for Python's way of reading line by line. Without this app wouldn't work with multiple agents.
+    working_on_a_group = True  # tracks whether we're still collecting agent names, important for Python's way of reading line by line. Without this app wouldn't work with multiple agents.
 
     for line in lines:
         line = line.strip()
@@ -63,12 +63,12 @@ def parse_robots_txt(content: str) -> dict:
         if line.lower().startswith("user-agent:"):
             agent_name = line.split(":", 1)[1].strip()
 
-            if expecting_new_group:
+            if working_on_a_group:
                 current_agents.append(agent_name)
             else:
                 # a new group is starting fresh
                 current_agents = [agent_name]
-                expecting_new_group = True
+                working_on_a_group = True
 
             if agent_name not in agent_rules:
                 agent_rules[agent_name] = []
@@ -77,8 +77,8 @@ def parse_robots_txt(content: str) -> dict:
             path = line.split(":", 1)[1].strip()
             for agent in current_agents:
                 agent_rules[agent].append(path)
-            expecting_new_group = False
-    
+            working_on_a_group = False
+
     # Now check each known AI agent against the parsed rules.
     results = {}
 
@@ -90,7 +90,10 @@ def parse_robots_txt(content: str) -> dict:
             elif len(disallow_paths) > 0:
                 results[agent] = "partially_blocked"
             else:
-                results[agent] = "allowed"
+                if "*" in agent_rules:
+                    results[agent] = "allowed_no_rules_wildcard_blocks"
+                else:
+                    results[agent] = "allowed"
         elif "*" in agent_rules:
             disallow_paths = agent_rules["*"]
             if "/" in disallow_paths:
