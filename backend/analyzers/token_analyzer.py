@@ -1,5 +1,3 @@
-from unittest import result
-
 from ..fetcher import fetch_url
 from ..fetcher import extract_content
 import tiktoken
