@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import SideRays from './components/SideRays'
 import './App.css'
+import AnalysisTab from './components/AnalysisTab'
+import RecommendationsTab from './components/RecommendationsTab'
+
 
 
 
@@ -8,14 +11,16 @@ function App() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
+  const [activeTab, setActiveTab] = useState('analysis')
 
   const analyzeUrl = async () => {
+    const normalizedUrl = url.startsWith('http') ? url : `https://${url}`
     setLoading(true)
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({ url: normalizedUrl })
       })
       const data = await response.json()
       setResults(data)
@@ -55,7 +60,27 @@ function App() {
         
       </div>
     </div>
-    {results && <pre>{JSON.stringify(results, null, 2)}</pre>}
+    {results && (
+      <div className="results-section">
+        <div className="tab-buttons">
+          <button 
+            className={activeTab === 'analysis' ? 'tab-active' : ''}
+            onClick={() => setActiveTab('analysis')}
+          >
+            Analysis
+          </button>
+          <button
+            className={activeTab === 'recommendations' ? 'tab-active' : ''}
+            onClick={() => setActiveTab('recommendations')}
+          >
+            Recommendations
+          </button>
+        </div>
+
+        {activeTab === 'analysis' && <AnalysisTab raw={results.raw} />}
+        {activeTab === 'recommendations' && <RecommendationsTab recommendations={results.recommendations} />}
+      </div>
+    )}
     </div>
   )
 }

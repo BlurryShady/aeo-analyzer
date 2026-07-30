@@ -1,0 +1,47 @@
+.analysis-tab {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.panel {
+  background: #13131a;
+  border: 1px solid #1e1e2e;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.panel h2 {
+  font-size: 1.1rem;
+  color: #f8fafc;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #1e1e2e;
+}
+
+.agent-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #1e1e2e;
+  font-size: 0.9rem;
+}
+
+.agent-row:last-child {
+  border-bottom: none;
+}
+
+.status-blocked { color: #ef4444; }
+.status-partially_blocked { color: #f59e0b; }
+.status-allowed { color: #22c55e; }
+.status-allowed_no_rules_wildcard_blocks { color: #f59e0b; }
+.status-not_mentioned { color: #64748b; }
+
+.status-missing { color: #ef4444; }
+.status-minimal { color: #f59e0b; }
+.status-strong { color: #5cb47c; }
+.status-sufficient { color: #22c55e; }
