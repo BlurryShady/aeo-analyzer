@@ -12,7 +12,7 @@ function AnalysisTab({ raw }) {
         {Object.entries(robots).map(([agent, status]) => (
           <div key={agent} className={`agent-row status-${status}`}>
             <span>{agent}</span>
-            <span>{status}</span>
+            <span className="mono">{status}</span>
           </div>
         ))}
       </section>
@@ -21,15 +21,15 @@ function AnalysisTab({ raw }) {
         <h2>LLMs.txt Quality</h2>
         <div className={`agent-row status-${llms.header_status}`}>
           <span>Headers</span>
-          <span>{llms.header_message}</span>
+          <span className="mono">{llms.header_message}</span>
         </div>
         <div className={`agent-row status-${llms.link_status}`}>
           <span>Links</span>
-          <span>{llms.link_message}</span>
+          <span className="mono">{llms.link_message}</span>
         </div>
         <div className={`agent-row status-${llms.length_status}`}>
           <span>Length</span>
-          <span>{llms.length_message}</span>
+          <span className="mono">{llms.length_message}</span>
         </div>
       </section>
 
@@ -37,28 +37,28 @@ function AnalysisTab({ raw }) {
       <h2>Token Usage</h2>
       <div className="agent-row">
         <span>OpenAI Token Count</span>
-        <span>{tokens.openai_token_count}</span>
+        <span className="mono">{tokens.openai_token_count}</span>
       </div>
       <div className="agent-row">
         <span>Claude Token Count</span>
-        <span>{tokens.claude_token_count ?? 'unavailable'}</span>
+        <span className="mono">{tokens.claude_token_count ?? 'unavailable'}</span>
       </div>
       <div className="agent-row">
         <span>Estimated Range (Other Agents)</span>
-        <span>{tokens.minimum_usage} - {tokens.maximum_usage}</span>
+        <span className="mono">{tokens.minimum_usage} - {tokens.maximum_usage}</span>
       </div>
       <div className="agent-row">
         <span>Word Count</span>
-        <span>{tokens.word_count}</span>
+        <span className="mono">{tokens.word_count}</span>
       </div>
       <div className="agent-row">
         <span>JS Dependent</span>
-        <span>{tokens.js_dependent ? 'Yes' : 'No'}</span>
+        <span className="mono">{tokens.js_dependent ? 'Yes' : 'No'}</span>
       </div>
       {tokens.disclaimer && (
         <div className="agent-row">
           <span>Warning</span>
-          <span>{tokens.disclaimer}</span>
+          <span className="mono">{tokens.disclaimer}</span>
         </div>
       )}
     </section>
@@ -67,24 +67,24 @@ function AnalysisTab({ raw }) {
       <h2>Content Analysis</h2>
       <div className="agent-row">
         <span>H1 Count</span>
-        <span>{content.h1_count}</span>
+        <span className="mono">{content.h1_count}</span>
       </div>
       <div className="agent-row">
         <span>H2 Count</span>
-        <span>{content.h2_count}</span>
+        <span className="mono">{content.h2_count}</span>
       </div>
       <div className="agent-row">
         <span>H3 Count</span>
-        <span>{content.h3_count}</span>
+        <span className="mono">{content.h3_count}</span>
       </div>
       <div className="agent-row">
         <span>Schema Markup</span>
-        <span>{content.schema_found ? '✓ Found' : '✗ Not found'}</span>
+        <span className="mono">{content.schema_found ? '✓ Found' : '✗ Not found'}</span>
       </div>
       {content.schema_message && (
         <div className="agent-row">
           <span>Schema Note</span>
-          <span>{content.schema_message}</span>
+          <span className="mono">{content.schema_message}</span>
         </div>
       )}
       {content.headings.length > 0 && (
@@ -93,7 +93,7 @@ function AnalysisTab({ raw }) {
           {content.headings.map((h, i) => (
             <div key={i} className="agent-row">
               <span>{h.level.toUpperCase()}</span>
-              <span>{h.text}</span>
+              <span className="mono">{h.text}</span>
             </div>
           ))}
         </div>
