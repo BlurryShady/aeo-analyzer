@@ -34,6 +34,9 @@
 .agent-row:last-child {
   border-bottom: none;
 }
+.agent-row span:first-child {
+  color: #f8fafc;
+}
 
 .status-blocked { color: #ef4444; }
 .status-partially_blocked { color: #f59e0b; }
