@@ -1,9 +1,18 @@
-function RecommendationsTab({ raw }) {
-  return (
-    <div>
-      <p>Placeholder for the tab</p>
+import './RecommendationsTab.css'
+
+function RecommendationsTab({ recommendations }) {
+
+return (
+  <div className="recommendations-tab">
+      {recommendations.map((rec, i) => (
+        <div key={i} className={`rec-card priority-${rec.priority}`}>
+          <span>{rec.priority.toUpperCase()} PRIORITY</span>
+          <span>{rec.category}</span>
+          <p>{rec.issue}</p>
+          <p>{rec.fix}</p>
+        </div>
+      ))}
     </div>
   )
 }
-
 export default RecommendationsTab
