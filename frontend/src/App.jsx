@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import SideRays from './components/SideRays'
 import './App.css'
 import AnalysisTab from './components/AnalysisTab'
 import RecommendationsTab from './components/RecommendationsTab'
-
+import MusicPlayer from './components/MusicPlayer'
 
 
 
@@ -12,6 +12,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
   const [activeTab, setActiveTab] = useState('analysis')
+  const resultsRef = useRef(null)
 
   const analyzeUrl = async () => {
     const normalizedUrl = url.startsWith('http') ? url : `https://${url}`
@@ -24,6 +25,9 @@ function App() {
       })
       const data = await response.json()
       setResults(data)
+          setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 100)
     } catch (error) {
       console.error('Analysis failed:', error)
     } finally {
@@ -57,11 +61,11 @@ function App() {
         >
           {loading ? 'Analyzing...' : 'Analyze'}
         </button>
-        
+
       </div>
     </div>
     {results && (
-      <div className="results-section">
+      <div className="results-section" ref={resultsRef}>
         <div className="tab-buttons">
           <button 
             className={activeTab === 'analysis' ? 'tab-active' : ''}
@@ -80,7 +84,9 @@ function App() {
         {activeTab === 'analysis' && <AnalysisTab raw={results.raw} />}
         {activeTab === 'recommendations' && <RecommendationsTab recommendations={results.recommendations} />}
       </div>
+    
     )}
+    <MusicPlayer />
     </div>
   )
 }
