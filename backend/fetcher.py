@@ -1,5 +1,8 @@
 import httpx
 import time
+from urllib.parse import urlparse
+
+
 
 # Mimic a generic AI agent user-agent for baseline fetching.
 AGENT_USER_AGENT = "AEO-Analyzer/1.0 (+https://github.com/BlurryShady/aeo-analyzer)"
@@ -88,6 +91,43 @@ def extract_content(html: str) -> dict:
         "text_to_html_ratio": round(text_to_html_ratio, 4),
         "likely_js_dependent": likely_js_dependent
     }
+
+
+
+def validate_url(url: str) -> bool:
+    try:
+        parsed = urlparse(url)
+        
+        # Must have a valid scheme
+        if parsed.scheme not in ("http", "https"):
+            return False
+        
+        # Must have a hostname
+        if not parsed.netloc:
+            return False
+        
+        hostname = parsed.hostname.lower()
+        
+        # Block localhost and internal addresses
+        blocked = [
+            "localhost",
+            "127.0.0.1",
+            "0.0.0.0",
+            "169.254.169.254",  # AWS metadata
+        ]
+        if hostname in blocked:
+            return False
+        
+        # Block internal IP ranges
+        if hostname.startswith("192.168.") or \
+           hostname.startswith("10.") or \
+           hostname.startswith("172."):
+            return False
+            
+        return True
+        
+    except Exception:
+        return False
 
 
 

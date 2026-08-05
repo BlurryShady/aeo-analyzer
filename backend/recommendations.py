@@ -2,11 +2,14 @@ from .analyzers.token_analyzer import analyze_tokens
 from .analyzers.content_analyzer import analyze_content
 from .analyzers.llms_checker import assess_llm_txt_quality, parse_llm_txt, fetch_llms_txt
 from .analyzers.robots_checker import parse_robots_txt, fetch_robots_txt
-from .fetcher import fetch_url, extract_content
+from .fetcher import fetch_url, validate_url
 
 
 
 async def generate_recommendations(url: str) -> dict:
+    if not validate_url(url):
+        return {"error": "Invalid or disallowed URL"}
+
     result = await fetch_url(url)
 
     token_result = await analyze_tokens(url)
@@ -166,15 +169,15 @@ async def generate_recommendations(url: str) -> dict:
 
 
     return {
-    "url": url,
-    "recommendations": recommendations,
-    "raw": {
-        "robots": robots_result,
-        "llms": llms_result,
-        "tokens": token_result,
-        "content": content_result
-    }
-    }
+        "url": url,
+        "recommendations": recommendations,
+        "raw": {
+            "robots": robots_result,
+            "llms": llms_result,
+            "tokens": token_result,
+            "content": content_result
+        }
+        }
 
 
 
