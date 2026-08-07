@@ -56,26 +56,26 @@ VITE_API_URL=http://localhost:8000
 
 
 ## Project Structure
-
+```
 aeo-analyzer/
 ├── backend/
-│ ├── main.py # FastAPI app and endpoints
-│ ├── fetcher.py # URL fetching and content extraction
-│ ├── recommendations.py # Orchestrates all analyzers
-│ └── analyzers/
-│ ├── robots_checker.py
-│ ├── llms_checker.py
-│ ├── token_analyzer.py
-│ └── content_analyzer.py
+│   ├── main.py
+│   ├── fetcher.py
+│   ├── recommendations.py
+│   └── analyzers/
+│       ├── robots_checker.py
+│       ├── llms_checker.py
+│       ├── token_analyzer.py
+│       └── content_analyzer.py
 └── frontend/
-└── src/
-├── App.jsx
-└── components/
-├── AnalysisTab.jsx
-├── RecommendationsTab.jsx
-├── MusicPlayer.jsx
-└── SideRays.jsx
-
+    └── src/
+        ├── App.jsx
+        └── components/
+            ├── AnalysisTab.jsx
+            ├── RecommendationsTab.jsx
+            ├── MusicPlayer.jsx
+            └── SideRays.jsx
+```
 
 
 Note: Cloud's API call created for backend but no API is connected since it's a credential. Claude's token analyze requires an API key.
